@@ -156,7 +156,9 @@ class ParticleSystem {
   }
 
   void addParticle() {
+    for (int i =0; i <= seedCount; i++){
     particles.add(new Particle(origin));
+  }
   }
 
   void run() {
