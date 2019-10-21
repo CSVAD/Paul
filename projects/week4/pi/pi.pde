@@ -12,7 +12,7 @@ float phase = 0;
 float shaper ;
 float thicks;
 String currentShape = "";
-
+int seedCount = 10;
 
 Controller ringResSlider;
 Controller freqSlider;
@@ -22,6 +22,7 @@ Controller phaseSlider;
 Controller shapeSlider;
 Controller thickSlider;
 Controller randSlider;
+Controller seedSlider;
 DropdownList shapes;
 
 
@@ -74,7 +75,11 @@ void setup() {
     .setPosition(25, 25*8)
     .setRange(0,1.5)
     ;   
-    
+
+    seedSlider = cp5.addSlider("seedCount")
+    .setPosition(25, 25*9)
+    .setRange(1,20)
+    ;  
   
   ps = new ParticleSystem(new PVector(width/2, 50));
   //shapes = cp5.addDropdownList("Shapes").setPosition(25,25*8).setSize(100, 600);
@@ -109,7 +114,7 @@ float quadHeight = (vaseHeight/rowNum);
   colorMode(RGB, 255, 255, 255, 100);
   //stroke(0,0,255);
   strokeWeight(3);
-;
+
   
   rotateY((float)(frameCount * Math.PI / 400));
   
@@ -155,6 +160,8 @@ class ParticleSystem {
   }
 
   void run() {
+    //for (int i =0; i <= (particles.size()-1); i++) {
+
     for (int i = (particles.size()-1); i >= 0; i--) {
       Particle p = particles.get(i);
       p.run();
@@ -163,9 +170,8 @@ class ParticleSystem {
       }
     }
   }
-}
 
-
+  }
 // A simple Particle class
 
 class Particle {
@@ -173,6 +179,7 @@ class Particle {
   PVector velocity;
   PVector acceleration;
   float lifespan;
+  int seedCount;
 
   Particle(PVector l) {
     acceleration = new PVector(0, 0.05);
